@@ -3,6 +3,7 @@ using ApplicationStatus.Data.Context;
 using ApplicationStatus.DTO.Heartbeat;
 using ApplicationStatus.Services.Heartbeat;
 using FluentValidation;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Scalar.AspNetCore;
 
@@ -30,6 +31,8 @@ builder.Services.AddScoped<IHeartbeatDataService, HeartbeatDataService>();
 // Add services to the container.
 // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
 builder.Services.AddOpenApi();
+
+builder.Services.AddAuthorization();
 
 var app = builder.Build();
 
