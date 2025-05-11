@@ -27,6 +27,7 @@
 
     <ItemGroup>
       <ProjectReference Include="..\ApplicationStatus.Data\ApplicationStatus.Data.csproj" />
+      <ProjectReference Include="..\ApplicationStatus.Services\ApplicationStatus.Services.csproj" />
     </ItemGroup>
 
 </Project>
