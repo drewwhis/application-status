@@ -1,7 +1,44 @@
 ﻿services:
-  applicationstatus:
-    image: applicationstatus
+  db:
+    image: mysql:9.3
+    secrets:
+      - db_password
+      - db_database
+    volumes:
+      - db_data:/var/lib/mysql
+    environment:
+      - MYSQL_DATABASE=application_status
+      - MYSQL_ROOT_PASSWORD_FILE=/run/secrets/db_password
+    expose:
+      - 3306
+    healthcheck:
+      test: out=$$(mysqladmin ping -h db -P 3306 -u root --password=$$(cat $${MYSQL_ROOT_PASSWORD_FILE}) 2>&1); echo $$out | grep 'mysqld is alive' || { echo $$out; exit 1; }
+      interval: 10s
+      timeout: 30s
+      retries: 10
+      start_period: 30s
+  application-status:
+    image: application-status
+    depends_on:
+      db:
+        condition: service_healthy
+        restart: true
+    secrets:
+      - db_password
+      - db_database
+      - db_port
+      - db_host
     build:
       context: .
       dockerfile: ApplicationStatus.API/Dockerfile
-
+volumes:
+  db_data:
+secrets:
+  db_port:
+    file: secrets/db_port.txt
+  db_password:
+    file: secrets/db_password.txt
+  db_database:
+    file: secrets/db_database.txt
+  db_host:
+    file: secrets/db_host.txt
