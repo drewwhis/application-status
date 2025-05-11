@@ -24,4 +24,9 @@ public static class Map
             LastUpdate = output.LastUpdate
         };
     }
+
+    public static Models.Heartbeat UpdateModel(this Models.Heartbeat model, Input input)
+    {
+        return model with { IsGood = input.IsGood, LastUpdate = DateTime.Now };
+    }
 }
