@@ -1,3 +1,4 @@
+using ApplicationStatus.DTO.Heartbeat;
 using ApplicationStatus.Services.Heartbeat;
 using FluentValidation;
 using Microsoft.AspNetCore.Http.HttpResults;
@@ -16,13 +17,13 @@ public static class HeartbeatEndpoints
         items.MapPost("/", Create);
     }
 
-    private static async Task<Results<Ok<IEnumerable<Models.Heartbeat>>, NotFound>> GetAll(IHeartbeatDataService dataService)
+    private static async Task<Results<Ok<IEnumerable<Output>>, NotFound>> GetAll(IHeartbeatDataService dataService)
     {
         var result = await dataService.GetAll();
         return TypedResults.Ok(result);
     }
 
-    private static async Task<Results<Ok<Models.Heartbeat>, ValidationProblem>> Create(IValidator<Models.Heartbeat> validator, IHeartbeatDataService dataService, Models.Heartbeat heartbeat)
+    private static async Task<Results<Ok<Output>, ValidationProblem>> Create(IValidator<Input> validator, IHeartbeatDataService dataService, Input heartbeat)
     {
         var validationResult = await validator.ValidateAsync(heartbeat);
         if (!validationResult.IsValid) 

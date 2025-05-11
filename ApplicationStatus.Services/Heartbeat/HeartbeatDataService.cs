@@ -10,8 +10,16 @@ public class HeartbeatDataService(AppDbContext db) : IHeartbeatDataService
         return await db.Heartbeats.ToListAsync();
     }
 
-    public Task<Models.Heartbeat> Create(Models.Heartbeat heartbeat)
+    public async Task<Models.Heartbeat?> Get(string applicationName)
     {
-        throw new NotImplementedException();
+        return await db.Heartbeats.FirstOrDefaultAsync(h => h.ApplicationName == applicationName);
+    }
+
+    public async Task<Models.Heartbeat> Create(Models.Heartbeat heartbeat)
+    {
+        await db.Heartbeats.AddAsync(heartbeat);
+        await db.SaveChangesAsync();
+        await db.Heartbeats.Entry(heartbeat).ReloadAsync();
+        return heartbeat;
     }
 }

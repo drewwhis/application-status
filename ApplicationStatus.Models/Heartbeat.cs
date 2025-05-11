@@ -1,7 +1,9 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using Microsoft.EntityFrameworkCore;
 
 namespace ApplicationStatus.Models;
 
+[Index(nameof(ApplicationName), IsUnique = true)]
 public record Heartbeat
 {
     [Key]

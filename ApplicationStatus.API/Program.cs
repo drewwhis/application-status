@@ -1,6 +1,6 @@
 using ApplicationStatus.API.Heartbeat;
 using ApplicationStatus.Data.Context;
-using ApplicationStatus.Models;
+using ApplicationStatus.DTO.Heartbeat;
 using ApplicationStatus.Services.Heartbeat;
 using FluentValidation;
 using Microsoft.EntityFrameworkCore;
@@ -22,7 +22,7 @@ builder.Services.AddDbContext<AppDbContext>(options =>
 });
 
 // Validators
-builder.Services.AddScoped<IValidator<Heartbeat>, HeartbeatValidator>();
+builder.Services.AddScoped<IValidator<Input>, Validator>();
 
 // Data Services
 builder.Services.AddScoped<IHeartbeatDataService, HeartbeatDataService>();

@@ -1,10 +1,11 @@
+using ApplicationStatus.DTO.Heartbeat;
 using FluentValidation;
 
 namespace ApplicationStatus.API.Heartbeat;
 
-public class HeartbeatValidator : AbstractValidator<Models.Heartbeat>
+public class Validator : AbstractValidator<Input>
 {
-    public HeartbeatValidator()
+    public Validator()
     {
         RuleFor(x => x.ApplicationName).NotEmpty().MinimumLength(2);
     }
