@@ -1,0 +1,7 @@
+﻿services:
+  applicationstatus:
+    image: applicationstatus
+    build:
+      context: .
+      dockerfile: ApplicationStatus/Dockerfile
+
