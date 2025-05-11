@@ -1,5 +1,8 @@
+using ApplicationStatus.API.Heartbeat;
 using ApplicationStatus.Data.Context;
+using ApplicationStatus.Models;
 using ApplicationStatus.Services.Heartbeat;
+using FluentValidation;
 using Microsoft.EntityFrameworkCore;
 using Scalar.AspNetCore;
 
@@ -18,7 +21,11 @@ builder.Services.AddDbContext<AppDbContext>(options =>
     options.UseMySQL(connectionString);
 });
 
-builder.Services.AddScoped<IHeartbeatService, HeartbeatService>();
+// Validators
+builder.Services.AddScoped<IValidator<Heartbeat>, HeartbeatValidator>();
+
+// Data Services
+builder.Services.AddScoped<IHeartbeatDataService, HeartbeatDataService>();
 
 // Add services to the container.
 // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
@@ -47,7 +54,6 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 
-app.MapGet("/heartbeat", async (IHeartbeatService service) => await service.GetAll())
-    .WithName("GetHeartbeat");
+app.RegisterHeartbeatEndpoints();
 
 app.Run();
