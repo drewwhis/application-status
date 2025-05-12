@@ -1,3 +1,4 @@
+using ApplicationStatus.API.Authentication;
 using ApplicationStatus.DTO.Heartbeat;
 using ApplicationStatus.Services.Heartbeat;
 using FluentValidation;
@@ -11,6 +12,7 @@ public static class Endpoints
     {
         var items = app
             .MapGroup("/heartbeats")
+            .AddEndpointFilter<ApiKeyEndpointFilter>()
             .WithTags("Heartbeats");
         
         items.MapGet("/", GetAll);

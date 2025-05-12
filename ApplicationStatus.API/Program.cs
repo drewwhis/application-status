@@ -1,6 +1,7 @@
 using ApplicationStatus.API.Heartbeat;
 using ApplicationStatus.Data.Context;
 using ApplicationStatus.DTO.Heartbeat;
+using ApplicationStatus.Services.ApiUser;
 using ApplicationStatus.Services.Heartbeat;
 using FluentValidation;
 using Microsoft.EntityFrameworkCore;
@@ -26,6 +27,7 @@ builder.Services.AddScoped<IValidator<Input>, Validator>();
 
 // Data Services
 builder.Services.AddScoped<IHeartbeatDataService, HeartbeatDataService>();
+builder.Services.AddScoped<IApiUserDataService, ApiUserDataService>();
 
 // Add services to the container.
 // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
@@ -53,6 +55,8 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
+
+app.UseAuthorization();
 
 app.RegisterHeartbeatEndpoints();
 

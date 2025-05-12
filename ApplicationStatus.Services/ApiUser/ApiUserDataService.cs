@@ -13,6 +13,7 @@ public class ApiUserDataService(AppDbContext db) : IApiUserDataService
         
         var halves = apiKey.Split('.');
         if (halves.Length != 2) return null;
+        if (halves[0].Length != 7) return null;
         
         var hash = ApiKeyHasher.Hash(apiKey);
         return (await db.ApiUsers
