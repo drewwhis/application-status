@@ -10,5 +10,6 @@ public class AppDbContext : DbContext
         
     }
 
+    public DbSet<ApiUser> ApiUsers { get; init; }
     public DbSet<Heartbeat> Heartbeats { get; set; }
 }
