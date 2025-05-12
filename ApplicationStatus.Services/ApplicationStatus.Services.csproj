@@ -9,6 +9,7 @@
     <ItemGroup>
       <ProjectReference Include="..\ApplicationStatus.Data\ApplicationStatus.Data.csproj" />
       <ProjectReference Include="..\ApplicationStatus.Models\ApplicationStatus.Models.csproj" />
+      <ProjectReference Include="..\ApplicationStatus.Utilities\ApplicationStatus.Utilities.csproj" />
     </ItemGroup>
 
 </Project>
