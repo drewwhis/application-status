@@ -28,6 +28,7 @@
       - db_database
       - db_port
       - db_host
+      - users
     build:
       context: .
       dockerfile: ApplicationStatus.API/Dockerfile
@@ -44,3 +45,5 @@ secrets:
     file: secrets/db_database.txt
   db_host:
     file: secrets/db_host.txt
+  users:
+    file: secrets/users.txt

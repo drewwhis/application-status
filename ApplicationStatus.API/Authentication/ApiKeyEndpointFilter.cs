@@ -3,7 +3,7 @@ using Microsoft.Extensions.Primitives;
 
 namespace ApplicationStatus.API.Authentication;
 
-public class ApiKeyEndpointFilter(IConfiguration configuration, IApiUserDataService dataService) : IEndpointFilter
+public class ApiKeyEndpointFilter(IApiUserDataService dataService) : IEndpointFilter
 {
     public async ValueTask<object?> InvokeAsync(EndpointFilterInvocationContext context, EndpointFilterDelegate next)
     {

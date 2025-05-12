@@ -1,3 +1,4 @@
+using ApplicationStatus.API.Authentication;
 using ApplicationStatus.API.Heartbeat;
 using ApplicationStatus.Data.Context;
 using ApplicationStatus.DTO.Heartbeat;
@@ -22,6 +23,8 @@ builder.Services.AddDbContext<AppDbContext>(options =>
     options.UseMySQL(connectionString);
 });
 
+builder.Services.AddAuthorization();
+
 // Validators
 builder.Services.AddScoped<IValidator<Input>, Validator>();
 
@@ -39,6 +42,9 @@ using (var scope = app.Services.CreateScope())
 {
     var db = scope.ServiceProvider.GetRequiredService<AppDbContext>();
     db.Database.Migrate();
+    
+    var service = scope.ServiceProvider.GetRequiredService<IApiUserDataService>();
+    await UserSeed.Seed(service, app.Configuration);
 }
 
 // Configure the HTTP request pipeline.

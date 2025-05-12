@@ -21,4 +21,28 @@ public class ApiUserDataService(AppDbContext db) : IApiUserDataService
             .FirstOrDefaultAsync(x => x.Prefix == halves[0] && x.ApiKeyHash == hash))
             ?.Prefix;
     }
+
+    public async Task<Models.ApiUser?> CreateUser(string applicationName, string apiKey, string prefix)
+    {
+        var apiUser = new Models.ApiUser
+        {
+            Id = Guid.CreateVersion7(),
+            ApplicationName = applicationName,
+            Prefix = prefix,
+            ApiKeyHash = ApiKeyHasher.Hash(apiKey)
+        };
+
+        try
+        {
+            await db.ApiUsers.AddAsync(apiUser);
+            await db.SaveChangesAsync();
+            await db.ApiUsers.Entry(apiUser).ReloadAsync();
+        }
+        catch
+        {
+            return null;
+        }
+        
+        return apiUser;
+    }
 }
